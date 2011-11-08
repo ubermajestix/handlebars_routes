@@ -3,7 +3,7 @@
 # route_name - String used to lookup route in the rails_routes global object
 # 
 Handlebars.registerHelper 'link_to', (text, route_name) ->
-  href = Handlebars.helpers['route'](route_name, @)
+  href = Handlebars.helpers['router'](route_name, @)
   template = _.template("<a href='{{href}}'>{{text}}</a>")
   template(text: text, href: href)
 
@@ -27,7 +27,7 @@ Handlebars.registerHelper 'link_to', (text, route_name) ->
 # route = /companies/:company_id/resources/:id 
 # # => /companies/2/resources/1
 #
-Handlebars.registerHelper 'route', (route_name, object) ->
+Handlebars.registerHelper 'router', (route_name, object) ->
   object or= @
   route = rails_routes[route_name]
   if route
