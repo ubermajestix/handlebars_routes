@@ -1,0 +1,5 @@
+window.rails_routes =
+<% Rails.application.routes.routes.each do |route| %>
+<% next unless route.name  %>
+  <%= route.name %>: "<%= route.path.gsub(/\(\.:\w+\)/,'').gsub(/:(\w+)/, "{{\\1}}").to_s %>"
+<% end %>
