@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency "execjs", "~> 1.2.9"
+  s.add_runtime_dependency "execjs", "~> 1.3"
   s.add_runtime_dependency "handlebars_assets", "~> 0.1.3"
+  s.add_runtime_dependency "underscore-rails", "~> 1.3"
 
 end
