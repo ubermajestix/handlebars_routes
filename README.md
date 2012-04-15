@@ -1,14 +1,23 @@
 Handlebars Routes
 =================
+
 Installing
 ----------
+
 Bundle it
 
     gem 'handlebars_routes', '~> 0.0.1'
 
 Sprockets require it (in app/assets/javascripts/application.(js|coffee) for example):
-    
+
     //= handlebars_routes
+
+The `link_to` helper uses [underscore.js](https://github.com/rweng/underscore-rails) templating and assumes you have put it into "mustache mode"
+
+    # Setup underscore's templating to use Mustache style templates
+    _.templateSettings =
+      interpolate: /\{\{(.+?)\}\}/g
+
 
 What it does
 ------------
@@ -22,11 +31,11 @@ Examples are probably better eh?
 --------------------------------
 
 Given the Rails routes:
-    
+
     resources :items do
       resources :products
     end
-      
+
 Given the data (a Backbone like object):
 
     item = { attributes: {
@@ -36,9 +45,12 @@ Given the data (a Backbone like object):
                created_at:'11/11/2011'      
               }
            }
-           
-And the template item/show.jst.hbs (notice the **triple-stache** around link_to):
-    
+
+And the template item/show.jst.hbs (notice the **triple-stache** around link_to).
+`"item_product"` is the route that Rails provided. The list of routes
+are stored in the `rails_routes` global javascript object. Take a look at
+it in Inspector to find specific routes. 
+
     <tr>
       {{#attributes}}
         <td>{{{link_to product.title "item_product"}}}</td>
@@ -51,10 +63,10 @@ And this coffeescript Backbone View:
 
     class ItemView extends Backbone.View
       # ...
-      
+
       render: =>
         $(@el).prepend JST['item/show'] @model
-      
+
       # ...
     end
 
@@ -65,4 +77,4 @@ This awesome looking html will be produced!!!
       <td>PUGS</td>
       <td>11/11/2011</td>
     </tr>
-    
+

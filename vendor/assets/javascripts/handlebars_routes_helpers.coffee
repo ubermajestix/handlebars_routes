@@ -7,7 +7,6 @@ Handlebars.registerHelper 'link_to', (text, route_name) ->
   template = _.template("<a href='{{href}}'>{{text}}</a>")
   template(text: text, href: href)
 
-# Returns what it returns.
 # Grab a named route from the global rails_routes object
 # rails_routes are mustached, so we'll try to match the object's attributes
 # to the attribute names in the route. We'll even recurse into the object
@@ -20,13 +19,16 @@ Handlebars.registerHelper 'link_to', (text, route_name) ->
 # Example:
 # object = {id: 1, title: 'boom', company_id: 5 }
 # route = /companies/:company_id/resources/:id 
+# router("company_resource", object)
 # # => /companies/5/resources/1
 # 
 # Example:
 # object = {id: 1, title: 'boom', company: { id: 2 }}
 # route = /companies/:company_id/resources/:id 
+# router("company_resource", object)
 # # => /companies/2/resources/1
 #
+# Returns a String.
 Handlebars.registerHelper 'router', (route_name, object) ->
   object or= @
   route = rails_routes[route_name]
@@ -40,6 +42,11 @@ Handlebars.registerHelper 'router', (route_name, object) ->
     # build an array to traverse if the attr has an underscore in it
     # we'll look for nested objects if we don't find a value in the object
     # for the underscored attr.
+    # For example if one of the attrs is "company_id" we'll look for
+    # the top level key "company_id" in object or look for the key
+    # "company" and then look for the key "id" inside the object at
+    # "company". The example in the comments above shows you both
+    # scenarios. 
     _.each attrs, (attr)->
       attr_hash[attr] or= [attr]
       if attr.match(/_/)
@@ -55,12 +62,13 @@ Handlebars.registerHelper 'router', (route_name, object) ->
           return traverse(obj[node], path)
         else
           return obj[node]
+    
     _.each _.keys(attr_hash), (key) ->
       if object[key]?
         attr_hash[key] = object[key]
       else
         attr_hash[key] = traverse(object, _.clone(attr_hash[key][1]))
-    
+
     _.template(route)(attr_hash)
 
-   
+
