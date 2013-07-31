@@ -1,5 +1,10 @@
 Handlebars Routes
 =================
+:microscope: **This was an experiment** to see if I could translate Rails routes into something useable on the client side.
+
+Its totally do-able but there are some major security implications to exposing ALL of your routes client side. 
+
+I'm no longer using this library, so hopefully it will serve as inspiration to someone else.
 
 Installing
 ----------
@@ -21,11 +26,14 @@ The `link_to` helper uses [underscore.js](https://github.com/rweng/underscore-ra
 
 What it does
 ------------
-Its really annoying not to have all your Rails routes on the client side especially when you're doing Javascript templating.  This gem aims to fix that by dumping your rails routes into a `rails_routes` object in javascript.
+Its really annoying not to have all your Rails routes on the client side especially when you're doing Javascript 
+templating.  This gem aims to fix that by dumping your rails routes into a `rails_routes` object in javascript.
 
-I've added my Handlebars Helpers `router` and `link_to`. The `link_to` helper uses the `router` helper to create links in Handlebars templates very much like creating links in Rails templates.
+I've added my Handlebars Helpers `router` and `link_to`. The `link_to` helper uses the `router` helper to create 
+links in Handlebars templates very much like creating links in Rails templates.
 
-The `router` will traverse your object looking for the right attributes to put into the route. You could also use these routes in Backbone models' urls, haven't tried it yet but its a thought.
+The `router` will traverse your object looking for the right attributes to put into the route. You could also use 
+these routes in Backbone models' urls, haven't tried it yet but its a thought.
 
 Examples are probably better eh?
 --------------------------------
